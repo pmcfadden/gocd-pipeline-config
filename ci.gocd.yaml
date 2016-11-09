@@ -1,0 +1,169 @@
+pipelines:
+  awscli_cookbook:
+    group: defaultGroup
+    materials:
+      mygit:
+        git: https://github.com/pmcfadden/gocd-pipeline-config.git
+    stages:
+      - lint:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - spec:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - kitchen:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - push:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+  audit_cookbook:
+    group: defaultGroup
+    materials:
+      mygit:
+        git: https://github.com/pmcfadden/aws-workshop.git
+    stages:
+      - lint:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - spec:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - kitchen:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - push:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+  base_cookbook:
+    group: defaultGroup
+    materials:
+      mygit:
+        git: https://github.com/dhruvbansal/titandb-ansible-role.git
+      awscli:
+        pipeline: awscli_cookbook
+        stage: push
+      audit:
+        pipeline: audit_cookbook
+        stage: push
+    stages:
+      - lint:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - spec:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - kitchen:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - push:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+  base_packer:
+    group: defaultGroup
+    materials:
+      mygit:
+        git: https://github.com/dhruvbansal/elasticshell.git
+      myupstream:
+        pipeline: base_cookbook
+        stage: push
+    stages:
+      - validate:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - build:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - kitchen:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - push:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+  supermarket_app:
+    group: defaultGroup
+    materials:
+      mygit:
+        git: https://github.com/dhruvbansal/rubix.git
+      myupstream:
+        pipeline: base_packer
+        stage: push
+    stages:
+      - test:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - deploy_non_prod:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - smoke_test_non_prod:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - deploy_prod:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
+      - smoke_test_prod:
+          jobs:
+            test: # name of the job
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec: # indicates type of task
+                   command: /bin/true
